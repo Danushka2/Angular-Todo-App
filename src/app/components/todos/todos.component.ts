@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TodosService } from '../../services/todos.service';
-
 import { Todo } from '../../models/Todo';
 
 @Component({
@@ -16,7 +15,7 @@ export class TodosComponent implements OnInit {
 
   ngOnInit() {
     this.todoService.getTodos().subscribe(todos => {
-      this.todos = todos;
+      this.todos = todos['posts'];
     });
   }
 

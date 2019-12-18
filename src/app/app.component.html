@@ -1,5 +1,5 @@
-<div class="content" role="main">
 
+<div class="content" role="main">
 
   <span>{{ title }} app is running!</span>
   <app-todos></app-todos>
@@ -21,3 +21,5 @@
   </svg>
 
 </div>
+<a [routerLink]="['/titles']" routerLinkActive="router-link-active" >link</a>
+<router-outlet></router-outlet>
