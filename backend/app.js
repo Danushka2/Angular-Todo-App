@@ -1,10 +1,32 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-
+const mongoose = require('mongoose');
+const Post = require('./models/post');
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+mongoose.connect("mongodb+srv://Danushka:1Za7cxQuC2L3Mjlb@clustertest-ldueo.mongodb.net/test-node?retryWrites=true&w=majority")
+  .then(() => {
+    console.log('connected to the database');
+  })
+  .catch(() => {
+    console.log('connection failed');
+  });
+
+//1Za7cxQuC2L3Mjlb
+
+app.post('/api/posts', (req, res, next) => {
+  const post = new Post({
+    title: 'testing mongo'
+  });
+  console.log(post);
+  post.save();
+  res.status(201).json({
+    message: 'Post added successfully'
+  })
+});
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,26 +42,22 @@ app.use((req, res, next) => {
 });
 
 
+
 app.use('/api/posts', (req, res, next) => {
-    const posts = [
-        { 
-            id: 2,
-            title: 'server posts 2 working' 
-        },
-        { 
-            id: 3, 
-            title: 'server posts 3 working' 
-        },
-        { 
-            id: 1, 
-            title: 'server posts 1 working' 
-        },
-    ]
+  let posts;
+
+  Post.find().then( documents => {
+    console.log(documents);
+    posts = documents;
+  })
+
+     
 
     res.status(200).json({
         message: 'Post fetched successfully!',
         posts: posts
     });
 });
+
 
 module.exports = app;
