@@ -17,17 +17,6 @@ mongoose.connect("mongodb+srv://Danushka:1Za7cxQuC2L3Mjlb@clustertest-ldueo.mong
 
 //1Za7cxQuC2L3Mjlb
 
-app.post('/api/posts', (req, res, next) => {
-  const post = new Post({
-    title: 'testing mongo'
-  });
-  console.log(post);
-  post.save();
-  res.status(201).json({
-    message: 'Post added successfully'
-  })
-});
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -41,22 +30,26 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post('/api/posts', (req, res, next) => {
+  const post = new Post({
+    title: 'testing mongo'
+  });
+  console.log(post);
+  post.save();
+  res.status(201).json({
+    message: 'Post added successfully'
+  })
+});
 
-
-app.use('/api/posts', (req, res, next) => {
-  let posts;
+app.get('/api/posts', (req, res, next) => {
 
   Post.find().then( documents => {
-    console.log(documents);
-    posts = documents;
-  })
-
-     
-
     res.status(200).json({
-        message: 'Post fetched successfully!',
-        posts: posts
+      message: 'Post fetched successfully!',
+      posts: documents
     });
+  });
+
 });
 
 
