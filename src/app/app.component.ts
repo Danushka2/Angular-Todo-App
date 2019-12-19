@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
+import { Todo } from './models/Todo';
+import { EventEmitter } from 'protractor';
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angularTodoApp';
+  titleX = 'angularTodoApp';
+  // enteredTitle = "";
+  // @Output() todoPostCreated = new EventEmitter<Todo>();
+
+  onAddTodoPost(form: NgForm){
+    const todo: Todo = {
+      title : form.value.titleName
+    };
+    console.log(todo);
+  }
+
+
 }
